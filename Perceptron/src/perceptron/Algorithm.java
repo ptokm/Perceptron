@@ -38,10 +38,9 @@ public class Algorithm {
                 // If real output is different from class that we know it is,
                 // then the weights need education
                 
-                Double realOutput = (output >= 0) ? 1.0 : -1.0;
-                this._realOutput.add(realOutput);
+                this._realOutput.add((output >= 0) ? 1.0 : -1.0);
                 
-                 if (Objects.equals(this._output.get(i), realOutput)) {
+                if (Objects.equals(this._output.get(i), this._realOutput.get(i))) {
                     countSuccessPaterns = 0;
                     educateWeights(i);
                 }else 
