@@ -1,5 +1,5 @@
 # Perceptron
-A simple Perceptron algorithm written in Java
+A simple Perceptron algorithm
 
 
 Implemented in Apache NetBeans IDE 14
