@@ -30,39 +30,30 @@ public class Algorithm {
             int countSuccessPaterns = 0;
             for (int i = 0; i < this._patterns.size(); i++) {
                 Double output = 0.0; //Calculate u(x)
-                for (int j = 0; j < _patterns.get(i).size(); j++) {
-                    output += _patterns.get(i).get(j) * _weights.get(j);
+                for (int j = 0; j < this._patterns.get(i).size(); j++) {
+                    output += this._patterns.get(i).get(j) * this._weights.get(j);
                 }
 
-                //If u(x) >= 0 then the object is orange, else is apple
-                if (output >= 0 ) {
-                    this._realOutput.add(1.0);
-                    //If real output is different from class that we know it is,
-                    //then the weights need education
-                    if (this._output.get(i) != 1.0) {
-                        countSuccessPaterns = 0;
-                        educateWeights(i);
-                    }else 
-                        countSuccessPaterns++;
-                }else {
-                    this._realOutput.add(-1.0);  
-                    //If real output is different from class that we know it is,
-                    //then the weights need education
-                    if (this._output.get(i) != -1.0) {
-                        countSuccessPaterns = 0;
-                        educateWeights(i);
-                    }else 
-                        countSuccessPaterns++;
-                }
+                // If u(x) >= 0 then the object is orange, else is apple
+                // If real output is different from class that we know it is,
+                // then the weights need education
+                
+                Double realOutput = (output >= 0) ? 1.0 : -1.0;
+                this._realOutput.add(realOutput);
+                
+                 if (Objects.equals(this._output.get(i), realOutput)) {
+                    countSuccessPaterns = 0;
+                    educateWeights(i);
+                }else 
+                    countSuccessPaterns++;
             } 
             
-            if (countSuccessPaterns == _patterns.size()) {
+            if (countSuccessPaterns == this._patterns.size()) {
                 break;
             }
         }
         
         trainNewPattern();
-       
     }
     
     public void educateWeights(int pattern) {
@@ -70,7 +61,7 @@ public class Algorithm {
         for (int i = 0; i < this._weights.size(); i++) {
           newWeights.add(this._weights.get(i) + (this._learningRate * (this._output.get(pattern)) - this._realOutput.get(pattern)) * this._patterns.get(pattern).get(i));
         }
-        _weights = newWeights;     
+        this._weights = newWeights;     
     }
     
     public void trainNewPattern() {
@@ -85,14 +76,14 @@ public class Algorithm {
                     try {
                         System.out.println("1st feature");
                         pattern.add(scanner.nextDouble());
-                    }catch(Exception e) {
+                    } catch(Exception e) {
                         System.out.println("Ivalid feature, try again.");
                         trainNewPattern();
                     }   
                     try {
                         System.out.println("2nd feature");
                         pattern.add(scanner.nextDouble());
-                    }catch(Exception e) {
+                    } catch(Exception e) {
                         System.out.println("Ivalid feature, try again.");
                         trainNewPattern();
                     }   
@@ -104,15 +95,15 @@ public class Algorithm {
                 case 0 -> System.out.println("Thank you!");
                 default -> trainNewPattern();
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             trainNewPattern();
         }
     }
     
     public void educatePattern(ArrayList <Double> pattern) {
         Double output = 0.0;
-        for (int i=0; i<pattern.size(); i++) {
-            output += pattern.get(i) * _weights.get(i);
+        for (int i = 0; i < pattern.size(); i++) {
+            output += pattern.get(i) * this._weights.get(i);
         }
         
         if (output >= 0)
