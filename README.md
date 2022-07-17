@@ -1,5 +1,5 @@
 # Perceptron
-A simple Perceptron algorithm
+A simple Perceptron algorithm with specific data of apple and oranges
 
 
 Implemented in Apache NetBeans IDE 14
